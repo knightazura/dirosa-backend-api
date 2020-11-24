@@ -30,6 +30,7 @@ class Users extends Model {
 
   static get relationMappings() {
     const Student = require('./students.model')
+    const Teacher = require('./teachers.model')
 
     return {
       student: {
@@ -38,6 +39,14 @@ class Users extends Model {
         join: {
           from: 'users.id',
           to: 'students.account_id'
+        }
+      },
+      teacher: {
+        relation: Model.HasOneRelation,
+        modelClass: Teacher,
+        join: {
+          from: 'users.id',
+          to: 'teachers.account_id'
         }
       }
     }
