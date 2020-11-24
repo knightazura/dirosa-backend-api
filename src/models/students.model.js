@@ -90,10 +90,10 @@ module.exports = function (app) {
       db.schema.createTable('students', table => {
         table.uuid('id');
         table.integer('account_id').references('users.id');
-        table.json('address');
         table.string('full_name');
         table.integer('age');
         table.string('phone_number');
+        table.json('address');
         table.string('occupation');
         table.timestamp('createdAt');
         table.timestamp('updatedAt');
