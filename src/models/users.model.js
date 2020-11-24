@@ -28,6 +28,21 @@ class Users extends Model {
     };
   }
 
+  static get relationMappings() {
+    const Student = require('./students.model')
+
+    return {
+      student: {
+        relation: Model.HasOneRelation,
+        modelClass: Student,
+        join: {
+          from: 'users.id',
+          to: 'students.account_id'
+        }
+      }
+    }
+  }
+
   $beforeInsert() {
     this.createdAt = this.updatedAt = new Date().toISOString();
   }
