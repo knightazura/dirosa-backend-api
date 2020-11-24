@@ -31,6 +31,7 @@ class AvailableTime extends Model {
 
   static get relationMappings() {
     const Teacher = require('./teachers.model');
+    const WaitingList = require('./waiting-list.model')
 
     return {
       teacher: {
@@ -41,6 +42,14 @@ class AvailableTime extends Model {
           to: 'teachers.id'
         }
       },
+      candidates: {
+        relation: Model.HasManyRelation,
+        model: WaitingList,
+        join: {
+          from: 'available_time.id',
+          to: 'waiting_list.schedule_id'
+        }
+      }
     }
   }
 

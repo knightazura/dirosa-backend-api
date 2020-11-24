@@ -102,7 +102,7 @@ module.exports = function (app) {
     if (!exists) {
       db.schema.createTable('teachers', table => {
         table.uuid('id');
-        table.integer('account_id').references('users.id');
+        table.integer('account_id');
         table.string('full_name');
         table.integer('age');
         table.string('phone_number');

@@ -59,6 +59,7 @@ class Students extends Model {
 
   static get relationMappings() {
     const User = require('./users.model')
+    const WaitingList = require('./waiting-list.model')
 
     return {
       account: {
@@ -67,6 +68,14 @@ class Students extends Model {
         join: {
           from: 'students.account_id',
           to: 'users.id'
+        }
+      },
+      stillWaiting: {
+        relation: Model.HasOneRelation,
+        modelClass: WaitingList,
+        join: {
+          from: 'students.id',
+          to: 'waiting_list.candidate_id'
         }
       }
     }
@@ -89,7 +98,7 @@ module.exports = function (app) {
     if (!exists) {
       db.schema.createTable('students', table => {
         table.uuid('id');
-        table.integer('account_id').references('users.id');
+        table.integer('account_id');
         table.string('full_name');
         table.integer('age');
         table.string('phone_number');
