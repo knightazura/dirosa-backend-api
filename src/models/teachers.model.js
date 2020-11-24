@@ -63,6 +63,7 @@ class Teachers extends Model {
 
   static get relationMappings() {
     const User = require('./users.model')
+    const AvailableTime = require('./available-time.model')
 
     return {
       account: {
@@ -72,7 +73,15 @@ class Teachers extends Model {
           from: 'teachers.account_id',
           to: 'users.id'
         }
-      }
+      },
+      availableTimes: {
+        relation: Model.HasManyRelation,
+        model: AvailableTime,
+        join: {
+          from: 'teachers.id',
+          to: 'available_time.teacher_id'
+        }
+      },
     }
   }
 

@@ -40,10 +40,7 @@ exports.Teachers = class Teachers extends Service {
 
       // Save the available time too
       const dataAvailableTime = {
-        teacher: {
-          id: newTeacher.id,
-          dpd_area: data.dpd_area
-        },
+        teacher_id: newTeacher.id,
         class_type: availableTime.class_type,
         frequency: availableTime.frequency,
         implementation: availableTime.implementation,
@@ -54,7 +51,7 @@ exports.Teachers = class Teachers extends Service {
       await this.app.service('available-time').create(dataAvailableTime);
 
       return {
-        message: "Berhasil mencatat data calon peserta baru",
+        message: "Berhasil mendaftarkan pengajar baru",
         type: "success",
         teacher: {
           id: newTeacher.id,
