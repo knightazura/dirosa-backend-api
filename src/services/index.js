@@ -8,12 +8,23 @@ const Chance = require("chance");
 
 const waitingList = require('./waiting-list/waiting-list.service.js');
 
+const DPD_LIST = require('../constants/dpd-list');
+const CLASS_TYPES = require('../constants/class-types');
+const PROGRAM_IMPLEMENTATIONS = require('../constants/program-implementation');
+const JOB_TYPES = require('../constants/student-jobs');
+
 // eslint-disable-next-line no-unused-vars
 module.exports = function (app) {
   app.configure(users);
   app.configure(students);
   app.configure(teachers);
   app.configure(availableTime);
+
+  // Misc. routes
+  app.use("/dpd-list", (request, response) => response.json(DPD_LIST));
+  app.use("/class-types", (request, response) => response.json(CLASS_TYPES));
+  app.use("/program-implementation", (request, response) => response.json(PROGRAM_IMPLEMENTATIONS));
+  app.use("/job-types", (request, response) => response.json(JOB_TYPES));
 
   // dummy deed
   app.use("/dummy-seed/pengajar", async (request, response) => {
