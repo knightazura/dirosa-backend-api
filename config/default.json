@@ -51,5 +51,13 @@
   "postgres": {
     "client": "pg",
     "connection": "postgresql://default:secret@localhost:5432/dirosa_jakarta"
+  },
+  "mail": {
+    "host": "smtp.ethereal.email",
+    "port": 587,
+    "auth": {
+      "user": "rashad.armstrong@ethereal.email",
+      "pass": "phD5RJ5dcJtUC5s63c"
+    }
   }
 }

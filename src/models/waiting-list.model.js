@@ -4,6 +4,10 @@ const { Model } = require('objection');
 
 class WaitingList extends Model {
 
+  static setup(app) {
+    this.app = app
+  }
+
   static get tableName() {
     return 'waiting_list';
   }
@@ -21,8 +25,8 @@ class WaitingList extends Model {
   }
 
   static get relationMappings() {
-    const Student = require('./students.model')
-    const AvailableTime = require('./available-time.model')
+    const Student = require('./students.model')();
+    const AvailableTime = require('./available-time.model')();
 
     return {
       candidate: {
@@ -54,22 +58,27 @@ class WaitingList extends Model {
 }
 
 module.exports = function (app) {
-  const db = app.get('knex');
+  if (app) {
+    WaitingList.setup(app);
 
-  db.schema.hasTable('waiting_list').then(exists => {
-    if (!exists) {
-      db.schema.createTable('waiting_list', table => {
-        table.increments('id');
-        table.string('candidate_id');
-        table.string('schedule_id');
-        table.timestamp('createdAt');
-        table.timestamp('updatedAt');
-      })
-        .then(() => console.log('Created waiting_list table')) // eslint-disable-line no-console
-        .catch(e => console.error('Error creating waiting_list table', e)); // eslint-disable-line no-console
-    }
-  })
-    .catch(e => console.error('Error creating waiting_list table', e)); // eslint-disable-line no-console
+    const db = app.get('knex');
+  
+    db.schema.hasTable('waiting_list').then(exists => {
+      if (!exists) {
+        db.schema.createTable('waiting_list', table => {
+          table.increments('id');
+          table.string('candidate_id');
+          table.string('schedule_id');
+          table.timestamp('createdAt');
+          table.timestamp('updatedAt');
+        })
+          .then(() => console.log('Created waiting_list table')) // eslint-disable-line no-console
+          .catch(e => console.error('Error creating waiting_list table', e)); // eslint-disable-line no-console
+      }
+    })
+      .catch(e => console.error('Error creating waiting_list table', e)); // eslint-disable-line no-console
+
+  }
 
   return WaitingList;
 };

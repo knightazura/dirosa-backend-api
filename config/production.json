@@ -4,5 +4,13 @@
   "postgres": {
     "client": "pg",
     "connection": "DATABASE_URL"
+  },
+  "mail": {
+    "host": "MAIL_HOST",
+    "port": "MAIL_PORT",
+    "auth": {
+      "user": "MAIL_AUTH_USER",
+      "pass": "MAIL_AUTH_PASSWORD"
+    }
   }
 }

@@ -4,6 +4,10 @@ const { Model } = require('objection');
 
 class Users extends Model {
 
+  static setup(app) {
+    this.app = app
+  }
+
   static get tableName() {
     return 'users';
   }
@@ -29,8 +33,8 @@ class Users extends Model {
   }
 
   static get relationMappings() {
-    const Student = require('./students.model')
-    const Teacher = require('./teachers.model')
+    const Student = require('./students.model')()
+    const Teacher = require('./teachers.model')()
 
     return {
       student: {
@@ -62,31 +66,35 @@ class Users extends Model {
 }
 
 module.exports = function (app) {
-  const db = app.get('knex');
+  if (app) {
+    Users.setup(app);
 
-  db.schema.hasTable('users').then(exists => {
-    if (!exists) {
-      db.schema.createTable('users', table => {
-        table.increments('id');
-      
-        table.string('email').unique();
-        table.string('password');
-      
-      
-        table.string('googleId');
-      
-        table.string('facebookId');
-      
-        table.string('twitterId');
-      
-        table.timestamp('createdAt');
-        table.timestamp('updatedAt');
-      })
-        .then(() => console.log('Created users table')) // eslint-disable-line no-console
-        .catch(e => console.error('Error creating users table', e)); // eslint-disable-line no-console
-    }
-  })
-    .catch(e => console.error('Error creating users table', e)); // eslint-disable-line no-console
+    const db = app.get('knex');
+  
+    db.schema.hasTable('users').then(exists => {
+      if (!exists) {
+        db.schema.createTable('users', table => {
+          table.increments('id');
+        
+          table.string('email').unique();
+          table.string('password');
+        
+        
+          table.string('googleId');
+        
+          table.string('facebookId');
+        
+          table.string('twitterId');
+        
+          table.timestamp('createdAt');
+          table.timestamp('updatedAt');
+        })
+          .then(() => console.log('Created users table')) // eslint-disable-line no-console
+          .catch(e => console.error('Error creating users table', e)); // eslint-disable-line no-console
+      }
+    })
+      .catch(e => console.error('Error creating users table', e)); // eslint-disable-line no-console
+  }
 
   return Users;
 };

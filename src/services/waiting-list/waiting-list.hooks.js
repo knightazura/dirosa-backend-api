@@ -1,5 +1,7 @@
 
 
+const sendFinishRegistrationMail = require('../../hooks/send-finish-registration-mail');
+
 module.exports = {
   before: {
     all: [],
@@ -15,7 +17,7 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [],
+    create: [sendFinishRegistrationMail()],
     update: [],
     patch: [],
     remove: []

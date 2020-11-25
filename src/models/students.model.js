@@ -5,6 +5,10 @@ const { v4: uuidv4 } = require('uuid');
 
 class Students extends Model {
 
+  static setup(app) {
+    this.app = app
+  }
+
   static get tableName() {
     return 'students';
   }
@@ -58,8 +62,8 @@ class Students extends Model {
   }
 
   static get relationMappings() {
-    const User = require('./users.model')
-    const WaitingList = require('./waiting-list.model')
+    const User = require('./users.model')();
+    const WaitingList = require('./waiting-list.model')();
 
     return {
       account: {
@@ -92,36 +96,41 @@ class Students extends Model {
 }
 
 module.exports = function (app) {
-  const db = app.get('knex');
+  if (app) {
+    Students.setup(app);
 
-  db.schema.hasTable('students').then(exists => {
-    if (!exists) {
-      db.schema.createTable('students', table => {
-        table.uuid('id');
-        table.integer('account_id');
-        table.string('full_name');
-        table.integer('age');
-        table.string('phone_number');
-        table.json('address');
-        table.string('occupation');
-        table.timestamp('createdAt');
-        table.timestamp('updatedAt');
-      })
-        .then(() => console.log('Created students table')) // eslint-disable-line no-console
-        .catch(e => console.error('Error creating students table', e)); // eslint-disable-line no-console
-    }
-
-    /**
-     * UPDATING SCHEMA!!
-     if (db.schema.hasColumn('students', 'new_column')) {
-       db.schema.table('students', table => {
-         table.string('new_column')
+    const db = app.get('knex');
+  
+    db.schema.hasTable('students').then(exists => {
+      if (!exists) {
+        db.schema.createTable('students', table => {
+          table.uuid('id');
+          table.integer('account_id');
+          table.string('full_name');
+          table.integer('age');
+          table.string('phone_number');
+          table.json('address');
+          table.string('occupation');
+          table.timestamp('createdAt');
+          table.timestamp('updatedAt');
         })
+          .then(() => console.log('Created students table')) // eslint-disable-line no-console
+          .catch(e => console.error('Error creating students table', e)); // eslint-disable-line no-console
       }
-    */
+  
+      /**
+       * UPDATING SCHEMA!!
+       if (db.schema.hasColumn('students', 'new_column')) {
+         db.schema.table('students', table => {
+           table.string('new_column')
+          })
+        }
+      */
+  
+    })
+      .catch(e => console.error('Error creating students table', e)); // eslint-disable-line no-console
 
-  })
-    .catch(e => console.error('Error creating students table', e)); // eslint-disable-line no-console
+  }
 
   return Students;
 };

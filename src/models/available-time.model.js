@@ -4,6 +4,10 @@ const { Model } = require('objection');
 
 class AvailableTime extends Model {
 
+  static setup(app) {
+    this.app = app
+  }
+
   static get tableName() {
     return 'available_time';
   }
@@ -30,8 +34,8 @@ class AvailableTime extends Model {
   }
 
   static get relationMappings() {
-    const Teacher = require('./teachers.model');
-    const WaitingList = require('./waiting-list.model')
+    const Teacher = require('./teachers.model')();
+    const WaitingList = require('./waiting-list.model')();
 
     return {
       teacher: {
@@ -63,26 +67,30 @@ class AvailableTime extends Model {
 }
 
 module.exports = function (app) {
-  const db = app.get('knex');
+  if (app) {
+    AvailableTime.setup(app);
 
-  db.schema.hasTable('available_time').then(exists => {
-    if (!exists) {
-      db.schema.createTable('available_time', table => {
-        table.increments('id');
-        table.uuid('teacher_id');
-        table.integer('class_type');
-        table.integer('frequency');
-        table.integer('implementation');
-        table.json('schedules');
-        table.string('status');
-        table.timestamp('createdAt');
-        table.timestamp('updatedAt');
-      })
-        .then(() => console.log('Created available_time table')) // eslint-disable-line no-console
-        .catch(e => console.error('Error creating available_time table', e)); // eslint-disable-line no-console
-    }
-  })
-    .catch(e => console.error('Error creating available_time table', e)); // eslint-disable-line no-console
+    const db = app.get('knex');
+  
+    db.schema.hasTable('available_time').then(exists => {
+      if (!exists) {
+        db.schema.createTable('available_time', table => {
+          table.increments('id');
+          table.uuid('teacher_id');
+          table.integer('class_type');
+          table.integer('frequency');
+          table.integer('implementation');
+          table.json('schedules');
+          table.string('status');
+          table.timestamp('createdAt');
+          table.timestamp('updatedAt');
+        })
+          .then(() => console.log('Created available_time table')) // eslint-disable-line no-console
+          .catch(e => console.error('Error creating available_time table', e)); // eslint-disable-line no-console
+      }
+    })
+      .catch(e => console.error('Error creating available_time table', e)); // eslint-disable-line no-console
+  }
 
   return AvailableTime;
 };

@@ -53,6 +53,7 @@
     "feathers-objection": "^6.3.0",
     "helmet": "^4.2.0",
     "knex": "^0.21.12",
+    "nodemailer": "^6.4.16",
     "objection": "^2.2.3",
     "pg": "^8.5.1",
     "serve-favicon": "^2.5.0",

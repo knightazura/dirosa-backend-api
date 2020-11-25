@@ -3,6 +3,10 @@ const { v4: uuidv4 } = require('uuid');
 
 class Teachers extends Model {
 
+  static setup(app) {
+    this.app = app
+  }
+
   static get tableName() {
     return 'teachers';
   }
@@ -62,8 +66,8 @@ class Teachers extends Model {
   }
 
   static get relationMappings() {
-    const User = require('./users.model')
-    const AvailableTime = require('./available-time.model')
+    const User = require('./users.model')();
+    const AvailableTime = require('./available-time.model')();
 
     return {
       account: {
@@ -96,37 +100,41 @@ class Teachers extends Model {
 }
 
 module.exports = function (app) {
-  const db = app.get('knex');
+  if (app) {
+    Teachers.setup(app);
 
-  db.schema.hasTable('teachers').then(exists => {
-    if (!exists) {
-      db.schema.createTable('teachers', table => {
-        table.uuid('id');
-        table.integer('account_id');
-        table.string('full_name');
-        table.integer('age');
-        table.string('phone_number');
-        table.json('address');
-        table.json('dpd_area');
-        table.string('occupation');
-        table.timestamp('createdAt');
-        table.timestamp('updatedAt');
-      })
-        .then(() => console.log('Created teachers table')) // eslint-disable-line no-console
-        .catch(e => console.error('Error creating teachers table', e)); // eslint-disable-line no-console
-    }
-
-    /**
-     * UPDATING SCHEMA!!
-     if (db.schema.hasColumn('students', 'new_column')) {
-       db.schema.table('students', table => {
-         table.string('new_column')
+    const db = app.get('knex');
+  
+    db.schema.hasTable('teachers').then(exists => {
+      if (!exists) {
+        db.schema.createTable('teachers', table => {
+          table.uuid('id');
+          table.integer('account_id');
+          table.string('full_name');
+          table.integer('age');
+          table.string('phone_number');
+          table.json('address');
+          table.json('dpd_area');
+          table.string('occupation');
+          table.timestamp('createdAt');
+          table.timestamp('updatedAt');
         })
+          .then(() => console.log('Created teachers table')) // eslint-disable-line no-console
+          .catch(e => console.error('Error creating teachers table', e)); // eslint-disable-line no-console
       }
-    */
-
-  })
-    .catch(e => console.error('Error creating teachers table', e)); // eslint-disable-line no-console
+  
+      /**
+       * UPDATING SCHEMA!!
+       if (db.schema.hasColumn('students', 'new_column')) {
+         db.schema.table('students', table => {
+           table.string('new_column')
+          })
+        }
+      */
+  
+    })
+      .catch(e => console.error('Error creating teachers table', e)); // eslint-disable-line no-console
+  }
 
   return Teachers;
 };
