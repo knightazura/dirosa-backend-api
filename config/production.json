@@ -3,7 +3,13 @@
   "port": "PORT",
   "postgres": {
     "client": "pg",
-    "connection": "DATABASE_URL"
+    "connection": "DATABASE_URL",
+    "migrations": {
+      "tableName": "knex_migrations"
+    },
+    "seeds": {
+      "directory": "../src/seeds"
+    }
   },
   "mail": {
     "host": "MAIL_HOST",

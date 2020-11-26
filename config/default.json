@@ -50,7 +50,13 @@
   },
   "postgres": {
     "client": "pg",
-    "connection": "postgresql://default:secret@localhost:5432/dirosa_jakarta"
+    "connection": "postgresql://default:secret@localhost:5432/dirosa_jakarta",
+    "migrations": {
+      "tableName": "knex_migrations"
+    },
+    "seeds": {
+      "directory": "../src/seeds"
+    }
   },
   "mail": {
     "host": "smtp.ethereal.email",
