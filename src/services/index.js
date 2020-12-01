@@ -176,4 +176,10 @@ module.exports = function (app) {
   });
   app.configure(waitingList);
   app.configure(halaqah);
+
+  app.use('/test-session', (req, res) => {
+    const n = req.session.views || 0;
+    req.session.views = n + 1;
+    res.end(`${n} views`);
+  });
 };
