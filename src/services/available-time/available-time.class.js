@@ -46,6 +46,11 @@ exports.AvailableTime = class AvailableTime extends Service {
       const priority = await super.find({
         query: commonQuery
       });
+
+      priority.data = priority.data.map(availableTime => {
+        availableTime.priority = true
+        return availableTime
+      })
   
       // Remove teacher_id query
       delete commonQuery.teacher_id;
@@ -60,6 +65,11 @@ exports.AvailableTime = class AvailableTime extends Service {
           commonQuery
         )
       });
+
+      lesser.data = lesser.data.map(availableTime => {
+        availableTime.priority = false
+        return availableTime
+      })
   
       response = priority.data.concat(lesser.data);
     } else {
