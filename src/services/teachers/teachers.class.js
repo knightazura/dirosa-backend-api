@@ -36,19 +36,23 @@ exports.Teachers = class Teachers extends Service {
 
       const newTeacher = await super.create(teacher, params);
 
-      const availableTime = data.available_time;
+      if (data.hasOwnProperty('available_times')) {
+        const availableTimes = data.available_times;
 
-      // Save the available time too
-      const dataAvailableTime = {
-        teacher_id: newTeacher.id,
-        class_type: availableTime.class_type,
-        frequency: availableTime.frequency,
-        implementation: availableTime.implementation,
-        schedules: availableTime.schedules,
-        status: 'NEW'
-      };
-
-      await this.app.service('available-time').create(dataAvailableTime);
+        availableTimes.forEach(async availableTime => {
+          // Save the available time too
+          const dataAvailableTime = {
+            teacher_id: newTeacher.id,
+            class_type: availableTime.class_type,
+            frequency: availableTime.frequency,
+            implementation: availableTime.implementation,
+            schedules: availableTime.schedules,
+            status: 'NEW'
+          };
+          
+          await this.app.service('available-time').create(dataAvailableTime);
+        });
+      }
 
       return {
         message: "Berhasil mendaftarkan pengajar baru",
