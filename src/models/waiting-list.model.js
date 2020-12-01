@@ -19,7 +19,7 @@ class WaitingList extends Model {
 
       properties: {
         candidate_id: { type: 'string' },
-        schedule_id: { type: 'string' }
+        schedule_id: { type: 'number' }
       }
     };
   }
