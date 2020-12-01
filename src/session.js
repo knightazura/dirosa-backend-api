@@ -16,8 +16,10 @@ module.exports = function (app) {
   app.use(session({
     secret: app.get('session').secret,
     cookie: {
-      maxAge: app.get('session').maxAge
+      maxAge: parseInt(app.get('session').maxAge)
     },
-    store
+    store,
+    resave: true,
+    saveUninitialized: false
   }))
 }
