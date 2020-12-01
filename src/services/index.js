@@ -13,6 +13,8 @@ const CLASS_TYPES = require('../constants/class-types');
 const PROGRAM_IMPLEMENTATIONS = require('../constants/program-implementation');
 const JOB_TYPES = require('../constants/student-jobs');
 
+const halaqah = require('./halaqah/halaqah.service.js');
+
 // eslint-disable-next-line no-unused-vars
 module.exports = function (app) {
   app.configure(users);
@@ -112,7 +114,6 @@ module.exports = function (app) {
             days: faker.date.weekday(),
             time: chance.pickone(times)
           });
-          app.configure(waitingList);
         } else {
           let freqSc = [];
           for (let z = 1; z <= frequency; z++) {
@@ -120,17 +121,14 @@ module.exports = function (app) {
               days: faker.date.weekday(),
               time: chance.pickone(times)
             });
-            app.configure(waitingList);
           }
           sc = Object.assign(sc, {
             id: faker.random.uuid(),
             times: freqSc
           });
-          app.configure(waitingList);
         }
 
         schedules.push(sc);
-        app.configure(waitingList);
       }
 
       const dataAvailableTime = {
@@ -169,16 +167,13 @@ module.exports = function (app) {
 
       try {
         await app.service("teachers").create(dataPengajar);
-        app.configure(waitingList);
       } catch (error) {
         console.error({ error });
-        app.configure(waitingList);
       }
-      app.configure(waitingList);
     }
 
     response.json("Dummy seeded!");
-    app.configure(waitingList);
   });
   app.configure(waitingList);
+  app.configure(halaqah);
 };
