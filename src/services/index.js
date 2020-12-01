@@ -88,7 +88,6 @@ module.exports = function (app) {
        * Waktu tersedia
        * @type {Number}
        */
-      const frequency = chance.natural({ min: 1, max: 3 });
       let times = [
         "05.00 - 06.00",
         "06.00 - 07.00",
@@ -103,41 +102,37 @@ module.exports = function (app) {
         "18.30 - 19.30",
         "19.30 - 20.30"
       ];
-      let schedules = [];
-
+      let availableTimes = [];
+      
       // Maximum every teachers only have 5 days to teaching
       for (let x = 0; x < chance.natural({ min: 1, max: 5 }); x++) {
-        let sc = {};
+        let schedules = [];
+
+        const frequency = chance.natural({ min: 1, max: 3 });
+        
         if (frequency === 1) {
-          sc = Object.assign(sc, {
-            id: faker.random.uuid(),
+          schedules.push({
             days: faker.date.weekday(),
             time: chance.pickone(times)
-          });
+          })
         } else {
-          let freqSc = [];
           for (let z = 1; z <= frequency; z++) {
-            freqSc.push({
+            schedules.push({
               days: faker.date.weekday(),
               time: chance.pickone(times)
             });
           }
-          sc = Object.assign(sc, {
-            id: faker.random.uuid(),
-            times: freqSc
-          });
         }
+        const dataAvailableTime = {
+          class_type: chance.natural({ min: 1, max: 4 }),
+          frequency: frequency,
+          implementation: chance.natural({ min: 1, max: 2 }),
+          schedules: schedules,
+          status: "NEW",
+        };
 
-        schedules.push(sc);
+        availableTimes.push(dataAvailableTime);
       }
-
-      const dataAvailableTime = {
-        class_type: chance.natural({ min: 1, max: 2 }),
-        frequency: frequency,
-        implementation: chance.natural({ min: 1, max: 2 }),
-        schedules: schedules,
-        status: "NEW",
-      };
 
       const dataPengajar = {
         email: faker.internet.email(),
@@ -162,7 +157,7 @@ module.exports = function (app) {
         dpd_area: dataDpd,
         phone_number: faker.phone.phoneNumberFormat(),
         occupation: "Pegawai Swasta",
-        available_time: dataAvailableTime,
+        available_times: availableTimes,
       };
 
       try {
