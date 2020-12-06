@@ -28,6 +28,12 @@ module.exports = function (app) {
   app.use("/program-implementation", (request, response) => response.json(PROGRAM_IMPLEMENTATIONS));
   app.use("/job-types", (request, response) => response.json(JOB_TYPES));
 
+  app.configure(waitingList);
+  app.configure(halaqah);
+
+  // temporary manual
+  // app.configure()
+
   // dummy deed
   app.use("/dummy-seed/pengajar", async (request, response) => {
     faker.locale = "id_ID";
@@ -169,9 +175,6 @@ module.exports = function (app) {
 
     response.json("Dummy seeded!");
   });
-  app.configure(waitingList);
-  app.configure(halaqah);
-
   app.use('/test-session', (req, res) => {
     const n = req.session.views || 0;
     req.session.views = n + 1;
