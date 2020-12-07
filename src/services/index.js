@@ -32,7 +32,7 @@ module.exports = function (app) {
   app.configure(halaqah);
 
   // temporary manual
-  // app.configure()
+  app.configure(require("./utilities/manual-teachers"));
 
   // dummy deed
   app.use("/dummy-seed/pengajar", async (request, response) => {
