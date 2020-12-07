@@ -1,6 +1,5 @@
-
-
-const sendFinishRegistrationMail = require('../../hooks/send-finish-registration-mail');
+// const sendFinishRegistrationMail = require('../../hooks/send-finish-registration-mail');
+const updateTotalCandidate = require('../../hooks/update-total-candidate');
 
 const updateTotalCandidate = require('../../hooks/update-total-candidate');
 
@@ -19,7 +18,7 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [sendFinishRegistrationMail(), updateTotalCandidate()],
+    create: [updateTotalCandidate()],
     update: [],
     patch: [],
     remove: []

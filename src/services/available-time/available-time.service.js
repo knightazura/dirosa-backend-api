@@ -8,7 +8,7 @@ module.exports = function (app) {
     Model: createModel(app),
     paginate: app.get('paginate'),
     whitelist: ['$eager', '$joinRelation'],
-    allowedEager: ['teacher', 'candidates']
+    allowedEager: '[teacher, candidates]'
   };
 
   // Initialize our service with any options it requires
