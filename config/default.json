@@ -65,5 +65,9 @@
       "user": "rashad.armstrong@ethereal.email",
       "pass": "phD5RJ5dcJtUC5s63c"
     }
+  },
+  "session": {
+    "secret": "my-super-cat",
+    "maxAge": 3000
   }
 }

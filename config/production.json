@@ -18,5 +18,9 @@
       "user": "MAIL_AUTH_USER",
       "pass": "MAIL_AUTH_PASSWORD"
     }
+  },
+  "session": {
+    "secret": "SESSION_SECRET",
+    "maxAge": "MAX_AGE"
   }
 }

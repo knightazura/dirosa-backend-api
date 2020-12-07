@@ -13,6 +13,8 @@ const CLASS_TYPES = require('../constants/class-types');
 const PROGRAM_IMPLEMENTATIONS = require('../constants/program-implementation');
 const JOB_TYPES = require('../constants/student-jobs');
 
+const halaqah = require('./halaqah/halaqah.service.js');
+
 // eslint-disable-next-line no-unused-vars
 module.exports = function (app) {
   app.configure(users);
@@ -25,6 +27,12 @@ module.exports = function (app) {
   app.use("/class-types", (request, response) => response.json(CLASS_TYPES));
   app.use("/program-implementation", (request, response) => response.json(PROGRAM_IMPLEMENTATIONS));
   app.use("/job-types", (request, response) => response.json(JOB_TYPES));
+
+  app.configure(waitingList);
+  app.configure(halaqah);
+
+  // temporary manual
+  app.configure(require("./utilities/manual-teachers"));
 
   // dummy deed
   app.use("/dummy-seed/pengajar", async (request, response) => {
@@ -86,7 +94,6 @@ module.exports = function (app) {
        * Waktu tersedia
        * @type {Number}
        */
-      const frequency = chance.natural({ min: 1, max: 3 });
       let times = [
         "05.00 - 06.00",
         "06.00 - 07.00",
@@ -101,45 +108,37 @@ module.exports = function (app) {
         "18.30 - 19.30",
         "19.30 - 20.30"
       ];
-      let schedules = [];
-
+      let availableTimes = [];
+      
       // Maximum every teachers only have 5 days to teaching
       for (let x = 0; x < chance.natural({ min: 1, max: 5 }); x++) {
-        let sc = {};
+        let schedules = [];
+
+        const frequency = chance.natural({ min: 1, max: 3 });
+        
         if (frequency === 1) {
-          sc = Object.assign(sc, {
-            id: faker.random.uuid(),
+          schedules.push({
             days: faker.date.weekday(),
             time: chance.pickone(times)
-          });
-          app.configure(waitingList);
+          })
         } else {
-          let freqSc = [];
           for (let z = 1; z <= frequency; z++) {
-            freqSc.push({
+            schedules.push({
               days: faker.date.weekday(),
               time: chance.pickone(times)
             });
-            app.configure(waitingList);
           }
-          sc = Object.assign(sc, {
-            id: faker.random.uuid(),
-            times: freqSc
-          });
-          app.configure(waitingList);
         }
+        const dataAvailableTime = {
+          class_type: chance.natural({ min: 1, max: 4 }),
+          frequency: frequency,
+          implementation: chance.natural({ min: 1, max: 2 }),
+          schedules: schedules,
+          status: "NEW",
+        };
 
-        schedules.push(sc);
-        app.configure(waitingList);
+        availableTimes.push(dataAvailableTime);
       }
-
-      const dataAvailableTime = {
-        class_type: chance.natural({ min: 1, max: 2 }),
-        frequency: frequency,
-        implementation: chance.natural({ min: 1, max: 2 }),
-        schedules: schedules,
-        status: "NEW",
-      };
 
       const dataPengajar = {
         email: faker.internet.email(),
@@ -164,21 +163,21 @@ module.exports = function (app) {
         dpd_area: dataDpd,
         phone_number: faker.phone.phoneNumberFormat(),
         occupation: "Pegawai Swasta",
-        available_time: dataAvailableTime,
+        available_times: availableTimes,
       };
 
       try {
         await app.service("teachers").create(dataPengajar);
-        app.configure(waitingList);
       } catch (error) {
         console.error({ error });
-        app.configure(waitingList);
       }
-      app.configure(waitingList);
     }
 
     response.json("Dummy seeded!");
-    app.configure(waitingList);
   });
-  app.configure(waitingList);
+  app.use('/test-session', (req, res) => {
+    const n = req.session.views || 0;
+    req.session.views = n + 1;
+    res.end(`${n} views`);
+  });
 };

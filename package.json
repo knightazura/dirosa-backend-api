@@ -28,7 +28,8 @@
     "lint": "eslint src/. test/. --config .eslintrc.json --fix",
     "dev": "nodemon src/",
     "start": "node src/",
-    "mocha": "mocha test/ --recursive --exit"
+    "mocha": "mocha test/ --recursive --exit",
+    "heroku-postbuild": "NODE_ENV=production knex migrate:latest"
   },
   "standard": {
     "env": [
@@ -48,6 +49,7 @@
     "@feathersjs/transport-commons": "^4.5.10",
     "chance": "^1.1.7",
     "compression": "^1.7.4",
+    "connect-session-knex": "^2.0.0",
     "cors": "^2.8.5",
     "faker": "^5.1.0",
     "feathers-objection": "^6.3.0",

@@ -1,9 +1,8 @@
-// const sendFinishRegistrationMail = require('../../hooks/send-finish-registration-mail');
-const updateTotalCandidate = require('../../hooks/update-total-candidate');
+const { authenticate } = require('@feathersjs/authentication').hooks;
 
 module.exports = {
   before: {
-    all: [],
+    all: [ authenticate('jwt') ],
     find: [],
     get: [],
     create: [],
@@ -16,7 +15,7 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [updateTotalCandidate()],
+    create: [],
     update: [],
     patch: [],
     remove: []
