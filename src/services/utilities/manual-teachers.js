@@ -31,9 +31,9 @@ module.exports = function(app) {
           frequency: 3,
           implementation: 2,
           schedules: [
-            { day: "Selasa", time: "10:00 - 11:00" },
-            { day: "Rabu", time: "10:00 - 11:00" },
-            { day: "Kamis", time: "10:00 - 11:00" }
+            { days: "Selasa", time: "10:00 - 11:00" },
+            { days: "Rabu", time: "10:00 - 11:00" },
+            { days: "Kamis", time: "10:00 - 11:00" }
           ],
           status: "NEW"
         },
@@ -41,14 +41,14 @@ module.exports = function(app) {
           class_type: 1,
           frequency: 1,
           implementation: 1,
-          schedules: [{ day: "Senin", time: "19:30 - 20:30" }],
+          schedules: [{ days: "Senin", time: "19:30 - 20:30" }],
           status: "NEW"
         },
         {
           class_type: 2,
           frequency: 1,
           implementation: 1,
-          schedules: [{ day: "Sabtu", time: "18:15 - 19:00" }],
+          schedules: [{ days: "Sabtu", time: "18:15 - 19:00" }],
           status: "NEW"
         }
       ]
@@ -84,14 +84,14 @@ module.exports = function(app) {
           class_type: 2,
           frequency: 1,
           implementation: 2,
-          schedules: [{ day: "Kamis", time: "19:30 - 20:30" }],
+          schedules: [{ days: "Kamis", time: "19:30 - 20:30" }],
           status: "NEW"
         },
         {
           class_type: 1,
           frequency: 1,
           implementation: 2,
-          schedules: [{ day: "Sabtu", time: "19:30 - 20:30" }],
+          schedules: [{ days: "Sabtu", time: "19:30 - 20:30" }],
           status: "NEW"
         },
         {
@@ -99,9 +99,9 @@ module.exports = function(app) {
           frequency: 3,
           implementation: 2,
           schedules: [
-            { day: "Kamis", time: "19:30 - 20:30" },
-            { day: "Kamis", time: "19:30 - 20:30" },
-            { day: "Kamis", time: "19:30 - 20:30" }
+            { days: "Kamis", time: "19:30 - 20:30" },
+            { days: "Kamis", time: "19:30 - 20:30" },
+            { days: "Kamis", time: "19:30 - 20:30" }
           ],
           status: "NEW"
         }
@@ -138,7 +138,7 @@ module.exports = function(app) {
           class_type: 1,
           frequency: 1,
           implementation: 2,
-          schedules: [{ day: "Sabtu", time: "18:30 - 20:00" }],
+          schedules: [{ days: "Sabtu", time: "18:30 - 20:00" }],
           status: "NEW"
         }
       ]
@@ -176,8 +176,8 @@ module.exports = function(app) {
           frequency: 2,
           implementation: 2,
           schedules: [
-            { day: "Selasa", time: "07:00 - 08:30" },
-            { day: "Kamis", time: "07:00 - 08:30" }
+            { days: "Selasa", time: "07:00 - 08:30" },
+            { days: "Kamis", time: "07:00 - 08:30" }
           ],
           status: "NEW"
         }
@@ -215,8 +215,8 @@ module.exports = function(app) {
           frequency: 2,
           implementation: 2,
           schedules: [
-            { day: "Senin", time: "16:00 - 17:30" },
-            { day: "Kamis", time: "16:00 - 17:30" }
+            { days: "Senin", time: "16:00 - 17:30" },
+            { days: "Kamis", time: "16:00 - 17:30" }
           ],
           status: "NEW"
         }
@@ -254,8 +254,8 @@ module.exports = function(app) {
           frequency: 2,
           implementation: 2,
           schedules: [
-            { day: "Rabu", time: "17:00 - 18:00" },
-            { day: "Kamis", time: "17:00 - 18:00" }
+            { days: "Rabu", time: "17:00 - 18:00" },
+            { days: "Kamis", time: "17:00 - 18:00" }
           ],
           status: "NEW"
         }
@@ -294,8 +294,8 @@ module.exports = function(app) {
           frequency: 2,
           implementation: 1,
           schedules: [
-            { day: "Senin", time: "16:30 - 18:00" },
-            { day: "Rabu", time: "16:30 - 18:00" }
+            { days: "Senin", time: "16:30 - 18:00" },
+            { days: "Rabu", time: "16:30 - 18:00" }
           ],
           status: "NEW"
         }
@@ -385,9 +385,9 @@ module.exports = function(app) {
           frequency: 3,
           implementation: 1,
           schedules: [
-            { day: "Senin", time: "20:00 - 21:00" },
-            { day: "Selasa", time: "20:00 - 21:00" },
-            { day: "Rabu", time: "20:00 - 21:00" }
+            { days: "Senin", time: "20:00 - 21:00" },
+            { days: "Selasa", time: "20:00 - 21:00" },
+            { days: "Rabu", time: "20:00 - 21:00" }
           ],
           status: "NEW"
         },
@@ -396,9 +396,9 @@ module.exports = function(app) {
           frequency: 3,
           implementation: 1,
           schedules: [
-            { day: "Rabu", time: "16:00 - 17:00" },
-            { day: "Kamis", time: "16:00 - 17:00" },
-            { day: "Jum'at", time: "16:00 - 17:00" }
+            { days: "Rabu", time: "16:00 - 17:00" },
+            { days: "Kamis", time: "16:00 - 17:00" },
+            { days: "Jum'at", time: "16:00 - 17:00" }
           ],
           status: "NEW"
         },
@@ -407,8 +407,8 @@ module.exports = function(app) {
           frequency: 2,
           implementation: 1,
           schedules: [
-            { day: "Senin", time: "16:00 - 17:00" },
-            { day: "Selasa", time: "16:00 - 17:00" }
+            { days: "Senin", time: "16:00 - 17:00" },
+            { days: "Selasa", time: "16:00 - 17:00" }
           ],
           status: "NEW"
         }
