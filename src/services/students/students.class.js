@@ -16,6 +16,8 @@ exports.Students = class Students extends Service {
   }
 
   async create(data, params) {
+    shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
+
     const userData = {
       email: data.email,
       password: "dirosa_" + data.phone_number,
