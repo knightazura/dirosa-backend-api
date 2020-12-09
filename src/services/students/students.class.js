@@ -1,4 +1,5 @@
 const { Service } = require('feathers-objection');
+const shortid = require('shortid');
 
 exports.Students = class Students extends Service {
   constructor(options) {
@@ -15,9 +16,12 @@ exports.Students = class Students extends Service {
   }
 
   async create(data, params) {
+
     const userData = {
       email: data.email,
-      password: "dirosa_" + data.phone_number
+      password: "dirosa_" + data.phone_number,
+      referral_code: shortid.generate(),
+      referrer: data.hasOwnProperty('referrer') ? data.referrer : null,
     };
     
     const userService = this.app.service("users");
