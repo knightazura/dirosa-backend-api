@@ -18,7 +18,7 @@ module.exports = function(app) {
             const schedule_id = parseInt(candidate.stillWaiting.schedule_id)
 
             const schedule = await app.service('available-time').get(schedule_id)
-            const referral = await axios.get(`https://is.gd/create.php?format=json&url=https://rq.wahdahjakarta.com/cad-sg/${candidate.account.referral_code}`)
+            const referral = await axios.get(`https://is.gd/create.php?format=json&url=${req.get('Origin')}/cad-sg?rc=${candidate.account.referral_code}`)
 
             let class_type
             switch (schedule.class_type) {
