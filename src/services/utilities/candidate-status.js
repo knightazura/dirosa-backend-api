@@ -20,8 +20,6 @@ module.exports = function(app) {
             const schedule = await app.service('available-time').get(schedule_id)
             const referral = await axios.get(`https://is.gd/create.php?format=json&url=https://rq.wahdahjakarta.com/cad-sg/${candidate.account.referral_code}`)
 
-            console.log(schedule)
-
             let class_type
             switch (schedule.class_type) {
                 case 2:
