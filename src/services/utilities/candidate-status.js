@@ -39,11 +39,11 @@ module.exports = function(app) {
             let implementation = Object.is(schedule.implementation, 1) ? 'Offline' : 'Online'
 
             let reg_status_desc, reg_status
-            if (schedule.total_candidate < 0 && Object.is(schedule.class_type, 1)) {
+            if (schedule.total_candidate < 5 && Object.is(schedule.class_type, 1)) {
                 reg_status_desc = `Minimal ${5 - schedule.total_candidate} orang lagi<br>Kelas akan dimulai`
                 reg_status = "WL"
             } else if (
-                (schedule.total_candidate >= 1 && Object.is(schedule.class_type, 1)) ||
+                (schedule.total_candidate >= 5 && Object.is(schedule.class_type, 1)) ||
                 (Object.is(schedule.class_type, 2) || Object.is(schedule.class_type, 3))
             ) {
                 reg_status_desc = `Kami akan segera menghubungi Anda.<br>Paling lambat selama 3 hari setelah<br>${moment(schedule.updatedAt).format('LL')}`
