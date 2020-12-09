@@ -39,6 +39,7 @@ module.exports = function(app) {
             let implementation = Object.is(schedule.implementation, 1) ? 'Offline' : 'Online'
 
             let reg_status_desc, reg_status
+
             if (schedule.total_candidate < 5 && Object.is(schedule.class_type, 1)) {
                 reg_status_desc = `Minimal ${5 - schedule.total_candidate} orang lagi<br>Kelas akan dimulai`
                 reg_status = "WL"
