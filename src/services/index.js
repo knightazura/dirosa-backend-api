@@ -33,6 +33,7 @@ module.exports = function (app) {
 
   // temporary manual
   app.configure(require("./utilities/manual-teachers"));
+  app.configure(require('./utilities/candidate-status'));
 
   // dummy deed
   app.use("/dummy-seed/pengajar", async (request, response) => {
