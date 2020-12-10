@@ -14,6 +14,15 @@ module.exports = function(app) {
                 }
             })
 
+            if (Object.is(cadResponse.total, 0)) {
+                res
+                    .status(500)
+                    .json({
+                        status: "NF",
+                        message: "Candidate not found"
+                    })
+            }
+
             const candidate = cadResponse.data[0]
             const schedule_id = parseInt(candidate.stillWaiting.schedule_id)
 
@@ -69,7 +78,12 @@ module.exports = function(app) {
 
             res.json(payload)
         } catch (error) {
-            res.json(error)
+            res
+                .status(500)
+                .json({
+                    status: "ERR",
+                    message: error
+                })
         }
     })
 }
