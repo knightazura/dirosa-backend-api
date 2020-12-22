@@ -1,5 +1,10 @@
 const { Service } = require('feathers-objection');
 const shortid = require('shortid');
+const axios = require('axios');
+
+function addressFormatter(address) {
+  return `${address.street_name}, Kecamatan ${address.district.name} ${address.city.name}, Provinsi ${address.province.name}`
+}
 
 exports.Students = class Students extends Service {
   constructor(options) {
@@ -28,13 +33,24 @@ exports.Students = class Students extends Service {
     const newUser = await userService.create(userData);
 
     if (newUser) {
+      let externalServices = this.app.get("external_services");
+      // Send to telegram
+      let telegramResponse = await axios.post(externalServices.rq_functions.send_to_telegram, {
+        full_name: data.full_name,
+        address: addressFormatter(data.address),
+        age: data.age,
+        phone_number: data.phone_number,
+        occupation: data.occupation
+      })
+
       const student = {
         account_id: newUser.id,
         address: data.address,
         full_name: data.full_name,
         age: data.age,
         phone_number: data.phone_number,
-        occupation: data.occupation
+        occupation: data.occupation,
+        telegram_data: telegramResponse.data.tgram
       };
 
       const newStudent = await super.create(student, params);

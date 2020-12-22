@@ -22,5 +22,10 @@
   "session": {
     "secret": "SESSION_SECRET",
     "maxAge": "MAX_AGE"
+  },
+  "external_services": {
+    "rq_functions": {
+      "send_to_telegram": "RQFN_SEND_TO_TELEGRAM"
+    }
   }
 }

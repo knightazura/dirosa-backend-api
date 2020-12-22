@@ -69,5 +69,10 @@
   "session": {
     "secret": "my-super-cat",
     "maxAge": 3000
+  },
+  "external_services": {
+    "rq_functions": {
+      "send_to_telegram": "http://localhost:9000/.netlify/functions/send-to-telegram"
+    }
   }
 }
